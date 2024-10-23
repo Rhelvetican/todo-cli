@@ -22,14 +22,19 @@ fn main() -> Result<()> {
     let args = Cli::parse();
 
     let mut db = if let Some(db_loc) = args.database.as_deref() {
-        Database::from_path(db_loc)?
-    } else if let Ok(db) = Database::from_path(DEFAULT_DB_LOCATION) {
-        db
+        if let Ok(db) = Database::from_path(db_loc) {
+            db
+        } else if let Ok(db) = Database::from_path(DEFAULT_DB_LOCATION) {
+            db
+        } else {
+            Database::new()
+        }
     } else {
         Database::new()
     };
 
     use cli::Commands::*;
+
     match args.cmd {
         Add { desc } => db.add_task(desc),
         AddWithId { id, desc } => db.add_task_with_id(desc, id),
