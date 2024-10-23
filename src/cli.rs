@@ -2,14 +2,12 @@ use std::path::PathBuf;
 
 use clap::{Parser, Subcommand};
 
-use crate::DEFAULT_DB_LOCATION;
-
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
 #[command(propagate_version = true)]
 #[command(rename_all = "kebab-case")]
 pub struct Cli {
-    #[arg(short = 'd', long = "db", default_value = DEFAULT_DB_LOCATION)]
+    #[arg(short = 'd', long = "db")]
     pub database: Option<PathBuf>,
     #[arg(short, long, default_value_t = 0)]
     pub padding: usize,

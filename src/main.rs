@@ -21,16 +21,10 @@ fn main() -> Result<()> {
 
     let args = Cli::parse();
 
-    let mut db = if let Some(db_loc) = args.database.as_deref() {
-        if let Ok(db) = Database::from_path(db_loc) {
-            db
-        } else if let Ok(db) = Database::from_path(DEFAULT_DB_LOCATION) {
-            db
-        } else {
-            Database::new()
-        }
+    let mut db = if let Some(dbloc) = args.database.as_deref() {
+        Database::from_path(dbloc).unwrap_or_default()
     } else {
-        Database::new()
+        Database::from_path(DEFAULT_DB_LOCATION).unwrap_or_default()
     };
 
     use cli::Commands::*;

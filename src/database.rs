@@ -90,6 +90,13 @@ pub struct Database {
     pub ptr: usize,
 }
 
+impl Default for Database {
+    #[inline]
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Database {
     #[inline]
     pub fn new() -> Self {
