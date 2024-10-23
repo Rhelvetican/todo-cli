@@ -11,6 +11,8 @@ use crate::DEFAULT_DB_LOCATION;
 pub struct Cli {
     #[arg(short = 'd', long = "db", default_value = DEFAULT_DB_LOCATION)]
     pub database: Option<PathBuf>,
+    #[arg(short, long, default_value_t = 0)]
+    pub padding: usize,
     #[command(subcommand)]
     pub cmd: Commands,
 }

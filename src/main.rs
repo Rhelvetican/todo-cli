@@ -1,3 +1,4 @@
+use ansi_term::enable_ansi_support;
 use clap::Parser;
 use cli::Cli;
 use database::Database;
@@ -10,6 +11,12 @@ mod utils;
 const DEFAULT_DB_LOCATION: &str = "./db.json";
 
 fn main() -> Result<()> {
+    #[cfg(any(target_os = "windows", target_env = "msvc"))]
+    if let Err(errcode) = enable_ansi_support() {
+        println!("Failed to enable ANSI support.");
+        println!("Error code: {}", errcode);
+    };
+
     let args = Cli::parse();
 
     let mut db = if let Some(db_loc) = args.database.as_deref() {
@@ -35,6 +42,16 @@ fn main() -> Result<()> {
             } else {
                 db.kv()
             };
+
+            let padding = args.padding;
+            for (id, task) in targets {
+                let line = " ".repeat(padding)
+                    + &" ".repeat(maxlen - id.len())
+                    + id
+                    + &" ".repeat(padding)
+                    + task;
+                println!("{}", line);
+            }
         }
     }
 

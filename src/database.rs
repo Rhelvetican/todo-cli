@@ -147,10 +147,13 @@ impl Database {
 
     #[inline]
     pub fn kv(&self) -> (Vec<(&str, &str)>, usize) {
-        self.tasks
-            .iter()
-            .map(|(s, t)| (s.as_str(), t.desc()))
-            .collect()
+        self.tasks.iter().map(|(s, t)| (s.as_str(), t.desc())).fold(
+            (Vec::new(), 0),
+            |(mut v, maxlen), (id, task)| {
+                v.push((id, task));
+                (v, maxlen.max(id.len()))
+            },
+        )
     }
 
     #[inline]
