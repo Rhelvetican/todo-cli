@@ -1,11 +1,5 @@
 use std::{
-    collections::HashMap,
-    fs::File,
-    io::BufWriter,
-    iter::{empty, once},
-    path::Path,
-    str::FromStr,
-    time::SystemTime,
+    collections::HashMap, fs::File, io::BufWriter, path::Path, str::FromStr, time::SystemTime,
 };
 
 use serde::{Deserialize, Serialize};

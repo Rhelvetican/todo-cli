@@ -1,4 +1,4 @@
-use ansi_term::enable_ansi_support;
+use ansi_term::{enable_ansi_support, Colour};
 use clap::Parser;
 use cli::Cli;
 use database::Database;
@@ -16,6 +16,8 @@ fn main() -> Result<()> {
         println!("Failed to enable ANSI support.");
         println!("Error code: {}", errcode);
     };
+
+    use Colour::{Green, Purple};
 
     let args = Cli::parse();
 
@@ -45,12 +47,14 @@ fn main() -> Result<()> {
 
             let padding = args.padding;
             for (id, task) in targets {
-                let line = " ".repeat(padding)
-                    + &" ".repeat(maxlen - id.len())
-                    + id
-                    + &" ".repeat(padding)
-                    + task;
-                println!("{}", line);
+                println!(
+                    "{}{}{}{}{}",
+                    " ".repeat(padding),
+                    " ".repeat(maxlen - id.len()),
+                    Purple.paint(id),
+                    " ".repeat(padding),
+                    Green.paint(task)
+                );
             }
         }
     }
