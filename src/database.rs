@@ -85,6 +85,7 @@ impl Task {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+/// The main database which holds all the tasks, and timestamps.
 pub struct Database {
     tasks: HashMap<String, Task>,
     pub ptr: usize,
