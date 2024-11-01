@@ -1,3 +1,5 @@
+use std::fs::File;
+
 use ansi_term::{enable_ansi_support, Colour};
 use clap::Parser;
 use cli::Cli;
